@@ -2,11 +2,10 @@
  * marketo_form_cdialog.js
  *
  * Mail bug reports and suggestion to : Yukio Y <unknot304 AT gmail.com>
+ * MIT License, Copyright 2015 Yukio Y.
  * 
- * Requires: jquery-ui.js
+ * Requires: jquery.min.js, jquery-ui.js
  */
-
-
 $(function(){
 	var confirmDialog;
 	var dialogContents;
@@ -18,7 +17,6 @@ $(function(){
 	// Option handling for email confirmation fields
 	var mail_confirm = $('meta[name="mktoForm2CDialog:Mail_Confirm"]').attr("content");
 
-		
 	dialogContents = '\
 		<div id="mktoConfirmDialog" title="入力内容の確認">\
 		<div>\
@@ -28,9 +26,54 @@ $(function(){
 		</div>';
 	
 	MktoForms2.whenReady(function (form) {
-		xform = form;		
+		// Mail confirm field will be dded if name="mktoForm2CDialog:Mail_Confirm" meta tag has "true"
+		if (mail_confirm == "true") {
+			// The following section (line from 38 to 78), "Mail confirmation fields code" is written by Sandord Whiteman.
+			// https://nation.marketo.com/message/91696#91696
+			// http://jsfiddle.net/sanford/9bo4rq8v/
+			// MIT License
+			
+		    //  tag all outer wrapper DIVs with their inner inputs' names to make them more findable
+		    for ( var formEl = form.getFormElem()[0], formRows = formEl.querySelectorAll('.mktoFormRow'), i = 0, imax = formRows.length, wrappedField; i < imax; i++ ) {    
+		        if ( (wrappedField = formRows[i].querySelector('INPUT,SELECT,TEXTAREA')) && wrappedField.name) {
+		            formRows[i].setAttribute('data-wrapper-for',wrappedField.name);
+		        }
+		    }
+
+		    // clone the Email field wrapper
+		    var emailWrapper = formEl.querySelector('.mktoFormRow[data-wrapper-for="Email"]');
+		    var emailConfirmWrapper = emailWrapper.cloneNode(true);
+		    
+		    // set some strings
+		    var emailConfirmFieldName = 'emailConfirm';
+		    var emailConfirmFieldSelector = '#'+emailConfirmFieldName;
+		    var emailConfirmFieldLabel = 'メールアドレス確認';
+		    var	emailConfirmValidationError = 'メールアドレスとその確認は一致する必要があります';
+
+		    // change some attributes before injecting
+		    emailConfirmWrapper.setAttribute('data-wrapper-for',emailConfirmFieldName);
+		    emailConfirmWrapper.querySelector('INPUT').name = emailConfirmWrapper.querySelector('INPUT').id = emailConfirmFieldName;
+		    emailConfirmWrapper.querySelector('.mktoFormCol').className = 'mktoFormCol'; // fixes bug when cloning mandatory field
+		    emailConfirmWrapper.querySelector('LABEL').innerHTML = emailConfirmFieldLabel;
+
+		    // add to form 
+		    formEl.insertBefore(emailConfirmWrapper,emailWrapper.nextSibling);
+
+		    // compare Email and emailConfirm before submitting
+		    form.onValidate(function(valid) {
+		        if ( form.vals().Email == emailConfirmWrapper.querySelector(emailConfirmFieldSelector).value ) {
+		            form.submittable(true); 
+		        } else {
+		            form.submittable(false);
+		            form.showErrorMessage(emailConfirmValidationError,
+		            form.getFormElem().find(emailConfirmFieldSelector));
+		        }
+		    });
+		}
 		
+		// Creating Confirmation Dialogs
 	    // Callback for Submit 
+		xform = form;
 	    xform.onSubmit(function(){
 	    	
 	    	// creates dialog without open	
