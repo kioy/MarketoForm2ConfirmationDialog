@@ -11,7 +11,14 @@ $(function(){
 	var confirmDialog;
 	var dialogContents;
 	var xform;
-	
+
+	// Option Handling for Null Fill Fields　(this only supports text type fields)
+	var null_fields = $('meta[name="mktoForm2CDialog:NULL_Fill_Field_API_Names"]').attr("content");
+	var null_vals = {};
+	// Option handling for email confirmation fields
+	var mail_confirm = $('meta[name="mktoForm2CDialog:Mail_Confirm"]').attr("content");
+
+		
 	dialogContents = '\
 		<div id="mktoConfirmDialog" title="入力内容の確認">\
 		<div>\
@@ -36,11 +43,15 @@ $(function(){
 	    		hight: "auto",
 	    		buttons: {
 	    			"送信": function(){
+	    				if (Object.keys(null_vals).length != 0) {
+	    					xform.vals(null_vals); // if NULL filled fields are specified.
+	    				}
 	    				xform.submitable(true);
 	    				xform.submit();
 	    				$(this).dialog("close");
 	    			},
 	    			"戻る": function(){
+	    				null_vals = {};
 	    				$(this).dialog("close")
 	    			}
 	    		},
@@ -57,8 +68,7 @@ $(function(){
 	    			xform.submitable(true);		
 	    		}
 	    	});
-
-
+	    	
 	    	// get form columns and displaying selected items.
 			var lastLabelforCheckBox = ""; // This is used for radio/checkbox field to remove the same label (offsetLabel).
 			var $inputs = xform.getFormElem().find(':input');
@@ -143,18 +153,24 @@ $(function(){
 					break;
 				}
 				
-				// if displayValue is not specified, we print value as 'not specified'.
-				if (!displayValue) {
-					displayValue = '未指定';
-				}				
 				// remove '*'
 				if (displayLabel) {
 					displayLabel = displayLabel.replace(/\*/g,'');
 				}
-				if (displayValue) {
+				
+				// if displayValue is not specified, we print value as 'not specified'.
+				if (!displayValue) {
+					displayValue = '未指定';
+					
+					// NULL fill: if null_fields is specified in meta tag, we fill-out it with NULL.
+					if (fieldName && -1 != null_fields.search(new RegExp(fieldName))) {
+						null_vals[fieldName] = 'NULL';
+					}
+
+				} else {
 					// textarea might have new line.
-					displayValue = displayValue.replace(/[\n\r]/g,'<br/>');
-				}
+					displayValue = displayValue.replace(/[\n\r]/g,'<br/>');					
+				}	
 				
 				$("#confirmationContents").append('<tr><th align="right" valign="top">'+displayLabel+'</th><td align="left">'+displayValue+'</td></tr>');					
 			});
