@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2015 kioy
+Copyright (c) 2015 Yukio YASUTAKE
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,4 +19,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+This software includes the following software code.
+(this included at line 38 to 78 in mkto_form_cdialogs.js)
+
+The MIT LIcense (MIT)
+Copyright (c) 2015 Stanford Whiteman
+
+https://nation.marketo.com/message/91696#91696
+http://jsfiddle.net/sanford/9bo4rq8v/
 
