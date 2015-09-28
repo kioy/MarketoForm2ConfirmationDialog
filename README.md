@@ -3,7 +3,7 @@ You can use this script to embedded confirmation dialog into your Marketo form b
 
 # Usage
 1. Download mkto_form_cdialog.js and upload it to your site.
-2. Insert the following code(6 lines) into _<head></head>_ section in your Landing Pages.
+2. Insert the following code(6 lines) into `<head></head>` section in your Landing Pages. Please edit `<Somewhere your Sitea>`.
 
     `<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/black-tie/jquery-ui.css" />`
 
