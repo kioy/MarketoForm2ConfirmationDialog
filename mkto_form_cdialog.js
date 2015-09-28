@@ -28,7 +28,7 @@ $(function(){
 	MktoForms2.whenReady(function (form) {
 		// Mail confirm field will be dded if name="mktoForm2CDialog:Mail_Confirm" meta tag has "true"
 		if (mail_confirm == "true") {
-			// The following section (line from 38 to 78), "Mail confirmation fields code" is written by Sandord Whiteman.
+			// The following section (line from 37 to 71), "Mail confirmation fields code" is written by Sandord Whiteman.
 			// https://nation.marketo.com/message/91696#91696
 			// http://jsfiddle.net/sanford/9bo4rq8v/
 			// MIT License
