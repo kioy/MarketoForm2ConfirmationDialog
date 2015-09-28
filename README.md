@@ -29,6 +29,9 @@ You can use this script to embedded confirmation dialog into your Marketo form b
     `<meta name="mktoForm2CDialog:Mail_Confirm" content="true">`
 
 
+This js can be used for both external landing pages and Marketo landing pages. If you use this in the Marketo LP, you can add the above code via Custom Meta Tag menu in the edit LP mode.
+
+
 # Required
     jquery.min.js
     jquery-ui.min.js
