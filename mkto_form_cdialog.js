@@ -4,7 +4,7 @@
  * Mail bug reports and suggestion to : Yukio Y <unknot304 AT gmail.com>
  * MIT License, Copyright 2015 Yukio Y.
  * 
- * Requires: jquery.min.js, jquery-ui.js
+ * Requires: jquery.min.js, jquery-ui.js, jquery-ui.css (tested with 1.11.4)
  */
 $(function(){
 	var confirmDialog;
