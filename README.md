@@ -5,13 +5,13 @@ You can use this script to embedded confirmation dialog into your Marketo form b
 1. Download mkto_form_cdialog.js and upload it to `Somewhere in Your Site`.
 2. Insert the following code(6 lines) into `<head></head>` section in your Landing Pages. Please edit `<Somewhere In Your Site>` part.
 
-    `<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/black-tie/jquery-ui.css" />`
+    `<link type="text/css" rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/black-tie/jquery-ui.css" />`
 
-    `<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>`
+    `<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>`
 
-    `<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>`
+    `<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>`
 
-    `<script type="text/javascript" src="http://<Somewhere In Your Site>/mkto_form_cdialog.js"></script>`
+    `<script type="text/javascript" src="<Somewhere In Your Site>/mkto_form_cdialog.js"></script>`
 
     `<meta name="mktoForm2CDialog:NULL_Fill_Field_API_Names" content="">`
 
