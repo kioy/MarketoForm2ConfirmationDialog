@@ -120,6 +120,7 @@ $(function(){
 				var itemLabels;
 				var offsetLabel;
 				var displayValue;
+				var escapeLabel;
 				var fieldName = this.name;
 				var fieldType = this.type;
 				var fieldLabels = $(this).parent();
@@ -151,8 +152,8 @@ $(function(){
 						// if the checkbox has multiple items, we displayed checked one only with item's label.
 						if ($(this).prop('checked')) {
 							displayValue = $(this).next().text();
-							displayLabel.replace(/\+/g, "\\+");
-							displayLabel = itemLabels.replace(new RegExp(displayLabel,"g"),'');
+							escapeLabel = displayLabel.replace(/\+/g, "\\+");
+							displayLabel = itemLabels.replace(new RegExp(escapeLabel,"g"),'');
 							// check if this is the same label or not, if the label is the same, display empty strings to avoid duplication.
 							// skip the same label to display
 							if (lastLabelforCheckBox == displayLabel) {
@@ -176,8 +177,8 @@ $(function(){
 					// Label50
 					itemLabels = fieldLabels.offsetParent().text();
 					// Label
-					displayLabel.replace(/\+/g, "\\+");
-					displayLabel = itemLabels.replace(new RegExp(displayLabel,"g"),'');
+					escapeLabel = displayLabel.replace(/\+/g, "\\+");
+					displayLabel = itemLabels.replace(new RegExp(escapeLabel,"g"),'');
 					displayValue = fieldValue;					
 					break;
 				case 'hidden': 
