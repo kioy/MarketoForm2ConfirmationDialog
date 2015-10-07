@@ -218,7 +218,7 @@ $(function(){
 					displayValue = displayValue.replace(/[\n\r]/g,'<br/>');					
 				}	
 				
-				$("#confirmationContents").append('<tr><th align="right" valign="top">'+displayLabel+'</th><td align="left">'+displayValue+'</td></tr>');					
+				$("#confirmationContents").append('<tr><th align="right" valign="top">'+displayLabel+'&nbsp;</th><td align="left">'+displayValue+'</td></tr>');					
 			});
 	    	confirmDialog.dialog("open");
 	    	confirmDialog.dialog("moveToTop");
