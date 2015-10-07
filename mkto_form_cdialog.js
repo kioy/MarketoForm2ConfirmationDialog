@@ -151,6 +151,7 @@ $(function(){
 						// if the checkbox has multiple items, we displayed checked one only with item's label.
 						if ($(this).prop('checked')) {
 							displayValue = $(this).next().text();
+							displayLabel.replace(/\+/g, "\\+");
 							displayLabel = itemLabels.replace(new RegExp(displayLabel,"g"),'');
 							// check if this is the same label or not, if the label is the same, display empty strings to avoid duplication.
 							// skip the same label to display
@@ -175,6 +176,7 @@ $(function(){
 					// Label50
 					itemLabels = fieldLabels.offsetParent().text();
 					// Label
+					displayLabel.replace(/\+/g, "\\+");
 					displayLabel = itemLabels.replace(new RegExp(displayLabel,"g"),'');
 					displayValue = fieldValue;					
 					break;
