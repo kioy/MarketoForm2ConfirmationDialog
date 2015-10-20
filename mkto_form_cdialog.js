@@ -5,11 +5,10 @@
  * MIT License, Copyright 2015 Yukio Y.
  * 
  * Requires: jquery.min.js, jquery-ui.js, jquery-ui.css (tested with 1.11.4)
+ * 
  */
 $(function(){
 	var confirmDialog;
-	var dialogContents;
-	var xform;
 
 	// Option Handling for Null Fill Fields　(this only supports text type fields)
 	var null_fields = $('meta[name="mktoForm2CDialog:NULL_Fill_Field_API_Names"]').attr("content");
@@ -17,15 +16,10 @@ $(function(){
 	// Option handling for email confirmation fields
 	var mail_confirm = $('meta[name="mktoForm2CDialog:Mail_Confirm"]').attr("content");
 
-	dialogContents = '\
-		<div id="mktoConfirmDialog" title="入力内容の確認">\
-		<div>\
-			<table id="confirmationContents">\
-			</table>\
-		</div>\
-		</div>';
 	
 	MktoForms2.whenReady(function (form) {
+		
+		
 		// Mail confirm field will be dded if name="mktoForm2CDialog:Mail_Confirm" meta tag has "true"
 		if (mail_confirm == "true") {
 			// The following section (line from 37 to 71), "Mail confirmation fields code" is written by Sandord Whiteman.
@@ -73,12 +67,20 @@ $(function(){
 		
 		// Creating Confirmation Dialogs
 	    // Callback for Submit 
-		xform = form;
-	    xform.onSubmit(function(){
-	    	
+		form.onSubmit(function(targetForm){
+
+			var targetFormId = targetForm.getId();
+			var dialogContents = '\
+				<div id="mktoConfirmDialog' + targetFormId + '" title="入力内容の確認">\
+				<div>\
+					<table id="confirmationContents' + targetFormId + '">\
+					</table>\
+				</div>\
+				</div>';
+
 	    	// creates dialog without open	
 	    	$("body").append(dialogContents);	
-	    	confirmDialog = $("#mktoConfirmDialog").dialog({
+	    	confirmDialog = $("#mktoConfirmDialog"+targetFormId).dialog({
 	    		autoOpen: false,
 	    		modal: true,
 	    		closeOnEscape: false,
@@ -87,10 +89,10 @@ $(function(){
 	    		buttons: {
 	    			"送信": function(){
 	    				if (Object.keys(null_vals).length != 0) {
-	    					xform.vals(null_vals); // if NULL filled fields are specified.
+	    					targetForm.vals(null_vals); // if NULL filled fields are specified.
 	    				}
-	    				xform.submitable(true);
-	    				xform.submit();
+	    				targetForm.submitable(true);
+	    				targetForm.submit();
 	    				$(this).dialog("close");
 	    			},
 	    			"戻る": function(){
@@ -99,22 +101,22 @@ $(function(){
 	    			}
 	    		},
 	    		open: function(){
-	    			xform.submitable(false);
+	    			targetForm.submitable(false);
 	    			$('.ui-dialog-titlebar-close').hide();
-	    			$("#mktoConfirmDialog").append('<p>上記内容をご確認いただき、送信ください。</p>');
+	    			$("#mktoConfirmDialog"+targetFormId).append('<p>上記内容をご確認いただき、送信ください。</p>');
 	    		},
 	    		close: function(event){
 	    			// remove table all contents
 	    			// $("#confirmationContents").find("tr:gt(-1)").remove();
 	    			$(this).dialog("destroy");
 	    			$(event.target).remove();
-	    			xform.submitable(true);		
+	    			targetForm.submitable(true);		
 	    		}
 	    	});
 	    	
 	    	// get form columns and displaying selected items.
 			var lastLabelforCheckBox = ""; // This is used for radio/checkbox field to remove the same label (offsetLabel).
-			var $inputs = xform.getFormElem().find(':input');
+			var $inputs = targetForm.getFormElem().find(':input');
 			$inputs.each(function() {
 				var displayLabel;
 				var itemLabels;
@@ -218,7 +220,7 @@ $(function(){
 					displayValue = displayValue.replace(/[\n\r]/g,'<br/>');					
 				}	
 				
-				$("#confirmationContents").append('<tr><th align="right" valign="top">'+displayLabel+'&nbsp;</th><td align="left">'+displayValue+'</td></tr>');					
+				$("#confirmationContents"+targetFormId).append('<tr><th align="right" valign="top">'+displayLabel+'&nbsp;</th><td align="left">'+displayValue+'</td></tr>');					
 			});
 	    	confirmDialog.dialog("open");
 	    	confirmDialog.dialog("moveToTop");
